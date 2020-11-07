@@ -19,7 +19,93 @@ const render = require("./lib/htmlRenderer");
  * [empoyee name, id , email, type(list) , github whem engineer, school when intern , number when manager,  new employee [Yes No](* or confirm type)] if new enployee AskQuestions()
  * 
  */
+const team = [] ///array of employers
 
+const saveEmployee = data =>{
+    switch (data.role) {
+        case 'Engineer':
+            team.push( new Engineer(data.name, data.ID, data.email, data.github));
+            
+            break;
+        case 'Intern':
+            team.push( new Intern(data.name, data.ID, data.email, data.school));
+            
+            break;
+        case 'Manager':
+            team.push(new Manager(data.name, data.ID, data.email,data.number));
+            
+        default:
+            break;
+    }
+}
+
+questions = [        
+    {
+      type: "list",
+      choices: ["Manager", 'Intern','Engineer'],
+      message: "What is Employee Role",
+      name: "role"
+    },
+    {
+        type:"input",
+        message: "What is Employee Name?",
+        name: "name"
+      },
+      {
+        type:"input",
+        message: "What is Employee ID",
+        name: "ID"
+      },
+    {
+        type:"input",
+        message: "What is Employee email?",
+        name: "email"
+      },
+      {
+        type:"input",
+        message: "What is Engineer Github username?",
+        name: "github",
+        when: (answers) => answers.role === 'Engineer'
+      },
+      {
+        type:"input",
+        message: "What is Intern school?",
+        name: "school",
+        when: (answers) => answers.role === 'Intern'
+      },
+      {
+        type:"input",
+        message: "What is Manager office number",
+        name: "number",
+        when: (answers) => answers.role === 'Manager'
+      },
+      {
+        type:"confirm",
+        message: "Do you want to add more employees?",
+        name: "newEE"
+        
+      },
+    ];
+
+function askTeam() {
+    inquirer
+    .prompt(questions)
+    .then((response) => {
+        saveEmployee(response);
+        if (response.newEE){
+            askTeam();
+        }
+        else{
+            console.log(team);
+            const html = render(team);
+            console.log(html);
+        }
+  
+      }
+    );
+  
+  }
+askTeam();
 
 
 // After the user has input all employees desired, call the `render` function (required
