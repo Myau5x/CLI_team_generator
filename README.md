@@ -4,7 +4,7 @@
   1. [Installation](#installation)
   2. [Usage](#usage)
   3. [License](#license)
-  4. [Contribution Guidelines](#contribution-guidelines)
+  4. [Detailed description](#detailed-description)
   5. [Test](#test)
   6. [Questions](#questions)
 ## Installation
@@ -15,8 +15,8 @@ To use do next:
 `node app.js`
 ## License
 [License: MIT](https://opensource.org/licenses/MIT)
-## Contribution Guidelines 
-Ask me
+## Detailed description 
+
 ## Test
 To test use:
 ` npm test`
