@@ -21,6 +21,11 @@ const render = require("./lib/htmlRenderer");
  */
 const team = [] ///array of employers
 
+const SaveManager = data =>{
+  team.push(new Manager(data.name, data.ID, data.email,data.number));
+}
+
+
 const saveEmployee = data =>{
     switch (data.role) {
         case 'Engineer':
@@ -30,19 +35,46 @@ const saveEmployee = data =>{
         case 'Intern':
             team.push( new Intern(data.name, data.ID, data.email, data.school));
             
-            break;
-        case 'Manager':
-            team.push(new Manager(data.name, data.ID, data.email,data.number));
-            
+            break;     
         default:
             break;
     }
 }
+questionMan = [        
+
+  {
+      type:"input",
+      message: "What is Manager Name?",
+      name: "name"
+    },
+    {
+      type:"input",
+      message: "What is Manager ID",
+      name: "ID"
+    },
+  {
+      type:"input",
+      message: "What is Manager email?",
+      name: "email"
+    },
+   
+    {
+      type:"input",
+      message: "What is Manager office number",
+      name: "number",
+    },
+    {
+      type:"confirm",
+      message: "Do you want to add more employees?",
+      name: "newEE"
+      
+    },
+  ];
 
 questions = [        
     {
       type: "list",
-      choices: ["Manager", 'Intern','Engineer'],
+      choices: ['Intern','Engineer'],
       message: "What is Employee Role",
       name: "role"
     },
@@ -72,12 +104,6 @@ questions = [
         message: "What is Intern school?",
         name: "school",
         when: (answers) => answers.role === 'Intern'
-      },
-      {
-        type:"input",
-        message: "What is Manager office number",
-        name: "number",
-        when: (answers) => answers.role === 'Manager'
       },
       {
         type:"confirm",
@@ -131,8 +157,38 @@ function askTeam() {
     );
   
   }
-askTeam();
+//askTeam();
+function askManager(){
+  inquirer
+  .prompt(questionMan)
+  .then((response) => {
+    SaveManager(response);
+    if (response.newEE){
+        askTeam();
+    }
+    else{
+        //console.log(team);
+        const html = render(team);
+        //console.log(html);
+        ////check if OUTPUT_DIR exist if not then create
+        try {
+          if (fs.existsSync(OUTPUT_DIR)) {
+            console.log("Directory exists.")
+          } else {
+            console.log("Directory does not exist.")
+            fs.mkdirSync(OUTPUT_DIR);
+            console.log("directory was created")
+          }
+        } catch(e) {
+          console.log("An error occurred.")}
 
+
+        writeToFile(outputPath,html);
+    }
+
+  })
+}
+askManager();
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
