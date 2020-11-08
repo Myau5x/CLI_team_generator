@@ -86,6 +86,18 @@ questions = [
         
       },
     ];
+function writeToFile(fileName, data) {
+  fs.writeFile(fileName, data, function(err) {
+
+    if (err) {
+      return console.log(err);
+    }
+  
+    console.log("Success!");
+  
+  });
+
+}
 
 function askTeam() {
     inquirer
@@ -96,9 +108,23 @@ function askTeam() {
             askTeam();
         }
         else{
-            console.log(team);
+            //console.log(team);
             const html = render(team);
-            console.log(html);
+            //console.log(html);
+            ////check if OUTPUT_DIR exist if not then create
+            try {
+              if (fs.existsSync(OUTPUT_DIR)) {
+                console.log("Directory exists.")
+              } else {
+                console.log("Directory does not exist.")
+                fs.mkdirSync(OUTPUT_DIR);
+                console.log("directory was created")
+              }
+            } catch(e) {
+              console.log("An error occurred.")}
+
+
+            writeToFile(outputPath,html);
         }
   
       }
