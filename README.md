@@ -37,12 +37,12 @@ You can watch video how it works by [link](https://drive.google.com/file/d/1ca4e
 To test use:
 ` npm test`
 ## Files
-`app.js` &ndash; main application that prompts questions about team
-`lib` &ndash; js modules, contains employees classes and html renderer
-`templates` &ndash; html templates for main page, and employees cards
-`output` &ndash; directory for output
-`test` &ndash; directory with tests
-`screenshots` &ndash; screenshots of interface and output
+- `app.js` &ndash; main application that prompts questions about team
+- `lib` &ndash; js modules, contains employees classes and html renderer
+- `templates` &ndash; html templates for main page, and employees cards
+- `output` &ndash; directory for output
+- `test` &ndash; directory with tests
+- `screenshots` &ndash; screenshots of interface and output
 
 ## Questions
 For questionts please contact [me](https://github.com/Myau5x) at ola.illari@gmail.com
